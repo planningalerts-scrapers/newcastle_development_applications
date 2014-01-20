@@ -1,4 +1,5 @@
 <?php
+require 'scraperwiki.php';
 
 require 'scraperwiki/simple_html_dom.php';
 
@@ -80,7 +81,7 @@ foreach ($rss->channel->item as $item)
             //'on_notice_to' => $on_notice_to
         );
     
-        if (scraperwiki::select("* from swdata where `council_reference`='$council_reference'"))
+        if (scraperwiki::select("* from data where `council_reference`='$council_reference'"))
         {
             print "Skipping already saved record $council_reference\n";
         }else{
