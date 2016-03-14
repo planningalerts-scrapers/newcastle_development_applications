@@ -5,10 +5,6 @@
 * Pagnation - No
 * JSON - Yes - Yay....
 
-Setup MORPH_PERIOD for data recovery, available options are
-
-* thisweek (default, today -7 days)
-* thismonth
-* lastmonth
+We're using the ATDIS feed for this scraper.
 
 Enjoy
