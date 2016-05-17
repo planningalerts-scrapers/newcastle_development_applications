@@ -9,7 +9,7 @@ require 'tempfile'
 include PDFToHTMLR
 
 comment_url = 'mailto:mail@ncc.nsw.gov.au?subject='
-starting_url = 'http://www.newcastle.nsw.gov.au/building_and_planning/da_assessment/current_das/current_das'
+starting_url = 'http://www.newcastle.nsw.gov.au/Development/Development-Applications/Current-approved-DA-s'
 search_result_url = 'https://ecouncil.burwood.nsw.gov.au/eservice/daEnquiryDetails.do?index='
 
 def commit(pdf_url, reference, address, description, comment_url, date)
