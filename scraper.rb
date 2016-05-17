@@ -45,7 +45,6 @@ def scrape_pdf(agent, pdf_url, comment_url)
   # Parse out page data boundaries.
   pages = content.scan(/Public.*Notification.*Weekly.*Register.*?Newcastle.*City.*Council/m)
   
-  # Display no. of pages
   pages.each do |data|
     # Split into lines.
     page = data.split("\n")
@@ -62,7 +61,6 @@ def scrape_pdf(agent, pdf_url, comment_url)
     while i < page.size - 2 do
       line = page[i]
       if (line =~ ref_regexp)
-		puts "Found \n Ref: #{reference}, #{i}\n Address: #{address}\n Description: #{description}\n CommentURL: #{comment_url}\n #{date}\n"
         commit(pdf_url, reference, address, description, comment_url, date)
         reference = line
         reference = reference.slice(/\d{2}\/\d{5}[\.]?[0-9]?[0-9]?/)
