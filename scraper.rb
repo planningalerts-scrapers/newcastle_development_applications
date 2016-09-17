@@ -54,8 +54,8 @@ records.each do |r|
     case
       when str.match(/^Address: /)
         record["address"] = str.sub! 'Address: ', ''
-      when str.match(/^Development Applications - /)
-        record["description"] = str.sub! 'Development Applications - ', ''
+      when str.match(/^Development Applications - |^Complying Development - /)
+        record["description"] = str
       when str.match(/^Lodged: /)
         str = str.sub! 'Lodged: ', ''
         record["date_received"] = Date.strptime(str, '%d/%m/%Y').to_s
@@ -64,7 +64,7 @@ records.each do |r|
 
   if (ScraperWiki.select("* from data where `council_reference`='#{record['council_reference']}'").empty? rescue true)
     puts "Saving record " + record['council_reference'] + ", " + record['address']
-    # puts record
+#     puts record
     ScraperWiki.save_sqlite(['council_reference'], record)
   else
     puts "Skipping already saved record " + record['council_reference']
