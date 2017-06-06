@@ -1,11 +1,12 @@
 # Ballina Shire Council Scraper
 
-This council involves the followings
-* Server - MUST turn off gzip in HTTP
+* Server - Unknown but I like it
 * Cookie tracking - Yes
-* Pagnation - No - However, data already return full set
+* Pagnation - No
+* JSON - Yes - Yay....
 
 Setup MORPH_PERIOD for data recovery, available options are
+
 * thisweek (default, today -7 days)
 * thismonth
 * lastmonth
