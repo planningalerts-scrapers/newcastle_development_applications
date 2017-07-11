@@ -39,6 +39,7 @@ def scrape_pdf(agent, pdf_url, comment_url)
   date = date.sub("-","_")
   # Open PDF.
   doc = Nokogiri::HTML(PdfFileUrl.new(pdf_url).convert)
+
   # Fix encoding issues.
   content = doc.at('body').inner_text.encode("UTF-16be", :invalid=>:replace, :replace=>"?").encode('UTF-8')
 
@@ -48,14 +49,15 @@ def scrape_pdf(agent, pdf_url, comment_url)
   pages.each do |data|
     # Split into lines.
     page = data.split("\n")
+
     reference, description, address = false
     # Data is formatted like this:
-    # reference address
+    # reference (can run into address column in PDF)
+    # address (can be on several lines)
     # suburb
-    # description
+    # description (usually several lines)
     # cost
     # exhibition period
-    # (optional repeated) more description
     i = 1
     ref_regexp = /\d{2}\/\d{5}.*/
     while i < page.size - 2 do
@@ -63,9 +65,19 @@ def scrape_pdf(agent, pdf_url, comment_url)
       if (line =~ ref_regexp)
         commit(pdf_url, reference, address, description, comment_url, date)
         reference = line
-        reference = reference.slice(/\d{2}\/\d{5}[\.]?[0-9]?[0-9]?/)
-        address = page[i].sub(/\d{2}\/\d{5}[\.]?[0-9]?[0-9]?/, "") + " " + page[i + 1]
-        description = page[i + 2]
+
+        if reference.length > 11
+          reference_split = True
+          reference = reference.slice(/\d{2}\/\d{5}[\.]?[0-9]?[0-9]?/)
+          page.insert(i, reference)
+        end
+
+        street_address = page[i].sub(/\d{2}\/\d{5}[\.]?[0-9]?[0-9]?/, "") + " " + page[i + 1]
+        suburb = page[i + 2]
+        address = "#{street_address} #{suburb}"
+
+        # Description is on several lines and will get concatenated.
+        description = " "
         i += 3
         while i < page.size - 2 and !(page[i] =~ ref_regexp) do
           # Skip over cost and exhibition dates.
@@ -75,6 +87,11 @@ def scrape_pdf(agent, pdf_url, comment_url)
           i += 1
         end
         i -= 1
+
+        puts "REFERENCE - " + reference
+				puts "ADDRESS - " + address
+				puts "DESC - " + description
+
       end
       i += 1
     end
