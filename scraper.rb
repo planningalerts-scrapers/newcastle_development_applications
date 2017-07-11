@@ -66,10 +66,11 @@ def scrape_pdf(agent, pdf_url, comment_url)
         commit(pdf_url, reference, address, description, comment_url, date)
         reference = line
 
+        # Reference numbers have a max length of 11. Longer means columns don't have \n
         if reference.length > 11
           reference_split = True
           reference = reference.slice(/\d{2}\/\d{5}[\.]?[0-9]?[0-9]?/)
-          page.insert(i, reference)
+          page.insert(i-1, reference) # Could insert anything here, to keep array length
         end
 
         street_address = page[i].sub(/\d{2}\/\d{5}[\.]?[0-9]?[0-9]?/, "") + " " + page[i + 1]
@@ -77,7 +78,7 @@ def scrape_pdf(agent, pdf_url, comment_url)
         address = "#{street_address} #{suburb}"
 
         # Description is on several lines and will get concatenated.
-        description = " "
+        description = ""
         i += 3
         while i < page.size - 2 and !(page[i] =~ ref_regexp) do
           # Skip over cost and exhibition dates.
@@ -87,10 +88,6 @@ def scrape_pdf(agent, pdf_url, comment_url)
           i += 1
         end
         i -= 1
-
-        puts "REFERENCE - " + reference
-				puts "ADDRESS - " + address
-				puts "DESC - " + description
 
       end
       i += 1
