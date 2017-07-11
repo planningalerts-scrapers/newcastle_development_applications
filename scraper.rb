@@ -39,7 +39,6 @@ def scrape_pdf(agent, pdf_url, comment_url)
   date = date.sub("-","_")
   # Open PDF.
   doc = Nokogiri::HTML(PdfFileUrl.new(pdf_url).convert)
-
   # Fix encoding issues.
   content = doc.at('body').inner_text.encode("UTF-16be", :invalid=>:replace, :replace=>"?").encode('UTF-8')
 
@@ -49,7 +48,6 @@ def scrape_pdf(agent, pdf_url, comment_url)
   pages.each do |data|
     # Split into lines.
     page = data.split("\n")
-
     reference, description, address = false
     # Data is formatted like this:
     # reference (can run into address column in PDF)
@@ -88,7 +86,6 @@ def scrape_pdf(agent, pdf_url, comment_url)
           i += 1
         end
         i -= 1
-
       end
       i += 1
     end
