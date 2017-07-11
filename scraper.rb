@@ -56,6 +56,7 @@ def scrape_pdf(agent, pdf_url, comment_url)
     # description
     # cost
     # exhibition period
+    # (optional repeated) more description
     i = 1
     ref_regexp = /\d{2}\/\d{5}.*/
     while i < page.size - 2 do
