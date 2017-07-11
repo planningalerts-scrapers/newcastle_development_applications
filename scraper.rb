@@ -50,10 +50,10 @@ def scrape_pdf(agent, pdf_url, comment_url)
     page = data.split("\n")
     reference, description, address = false
     # Data is formatted like this:
-    # reference (can run into address column in PDF)
-    # address (can be on several lines)
+    # reference
+    # address
     # suburb
-    # description (usually several lines)
+    # description
     # cost
     # exhibition period
     i = 1
@@ -66,7 +66,6 @@ def scrape_pdf(agent, pdf_url, comment_url)
 
         # Reference numbers have a max length of 11. Longer means columns don't have \n
         if reference.length > 11
-          reference_split = True
           reference = reference.slice(/\d{2}\/\d{5}[\.]?[0-9]?[0-9]?/)
           page.insert(i-1, reference) # Could insert anything here, to keep array length
         end
