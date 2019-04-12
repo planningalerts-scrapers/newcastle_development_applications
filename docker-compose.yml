@@ -1,0 +1,8 @@
+version: "3.7"
+
+services:
+  scraper:
+    build: .
+    command: ["/bin/herokuish", "procfile", "start", "scraper"]
+    environment:
+      - REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt

@@ -1,0 +1,1 @@
+scraper: bundle exec ruby -r/usr/local/lib/prerun.rb scraper.rb
