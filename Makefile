@@ -1,4 +1,4 @@
-[I].phony: build run clean
+.phony: build run clean
 
 all: run
 
