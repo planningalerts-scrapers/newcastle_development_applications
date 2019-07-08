@@ -1,2 +1,6 @@
 # Ignore output of scraper
 data.sqlite
+vendor
+
+/.base_built
+/prev-data.sqlite

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 require 'scraperwiki'
 require 'rubygems'
 require 'mechanize'
@@ -104,3 +105,11 @@ doc.search('item link').each do |link|
     puts ex.message
   end
 end
+=======
+#!/usr/bin/env ruby
+Bundler.require
+
+url = "https://property.ncc.nsw.gov.au/T1PRPROD/WebAppServices/ATDIS/atdis/1.0"
+
+ATDISPlanningAlertsFeed.save(url, timezone="Sydney")
+>>>>>>> be9463b6f73a687604ceed7fe382fa70b403feb4
